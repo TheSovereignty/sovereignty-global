@@ -5,7 +5,419 @@
   <title>Sovereignty.Global – The Sovereignty Suite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="The Sovereignty Suite – a global stack of tools for sovereign humans: Résumé builder, domain engine, and The Signal." />
-  <link rel="stylesheet" href="./style.css?v=1.0" />
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #050508;
+      --bg-elevated: #101018;
+      --bg-soft: #14141f;
+      --fg: #f5f5f7;
+      --muted: #9b9bb2;
+      --accent: #f4c15d;
+      --accent-soft: rgba(244, 193, 93, 0.12);
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --danger: #ff4b81;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-full: 999px;
+      --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.6);
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                   "Segoe UI", sans-serif;
+    }
+
+    html,
+    body {
+      height: 100%;
+      background: radial-gradient(circle at top, #11111b 0, #050508 55%, #000 100%);
+      color: var(--fg);
+      font-family: var(--font-main);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      padding: 20px 16px 32px;
+    }
+
+    .page-flicker-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.06), transparent);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      opacity: 0;
+      animation: flickerIntro 2.2s ease-out forwards;
+      z-index: 0;
+    }
+
+    @keyframes flickerIntro {
+      0% { opacity: 0.9; }
+      10% { opacity: 0.1; }
+      16% { opacity: 0.6; }
+      22% { opacity: 0.2; }
+      30% { opacity: 0.7; }
+      40% { opacity: 0.15; }
+      55% { opacity: 0.4; }
+      70% { opacity: 0.1; }
+      100% { opacity: 0; }
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(5, 5, 8, 0.9), transparent);
+      padding: 8px 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 20% 0, #f4c15d, #ff4b81 45%, #5d5bff 90%);
+      box-shadow: 0 0 40px rgba(244, 193, 93, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-main {
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .logo-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 14px;
+      font-size: 13px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0%;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.16s ease-out;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      padding: 26px 0 18px;
+      max-width: 720px;
+    }
+
+    .hero-tagline {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.04;
+      margin-bottom: 12px;
+    }
+
+    .hero-highlight {
+      display: block;
+      background: linear-gradient(110deg, #f4c15d, #ff4b81, #b78cff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-body {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      border-radius: var(--radius-full);
+      border: 1px solid transparent;
+      padding: 8px 16px;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s ease-out,
+                  color 0.15s ease-out,
+                  border-color 0.15s ease-out,
+                  transform 0.1s ease-out;
+    }
+
+    .btn.primary {
+      background: linear-gradient(120deg, #f4c15d, #ff4b81);
+      color: #050509;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn.ghost {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.08);
+      color: var(--fg);
+    }
+
+    .btn.ghost:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .btn.outline {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.25);
+      color: var(--fg);
+    }
+
+    .btn.text-only {
+      background: transparent;
+      border-color: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      padding-inline: 4px;
+    }
+
+    .btn.disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .section-body {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 18px;
+      max-width: 640px;
+    }
+
+    .suite {
+      margin-top: 22px;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    @media (min-width: 820px) {
+      .app-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .app-card {
+      background: radial-gradient(circle at top left, rgba(244, 193, 93, 0.08), transparent 55%),
+                  var(--bg-elevated);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 14px 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65);
+    }
+
+    .app-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(255, 75, 129, 0.09), transparent 58%);
+      opacity: 0;
+      transition: opacity 0.18s ease-out;
+      pointer-events: none;
+    }
+
+    .app-card:hover::before {
+      opacity: 1;
+    }
+
+    .app-status {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .app-title {
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .app-tagline {
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .app-body {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .app-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .app-card.soon {
+      background: radial-gradient(circle at top left, rgba(183, 140, 255, 0.1), transparent 50%),
+                  var(--bg-soft);
+    }
+
+    .app-card.signal {
+      background: radial-gradient(circle at bottom left, rgba(255, 75, 129, 0.14), transparent 60%),
+                  var(--bg-elevated);
+    }
+
+    .about {
+      margin-top: 32px;
+      max-width: 720px;
+    }
+
+    .about-content {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .inline-mark {
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(244, 193, 93, 0.4);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .site-footer {
+      margin-top: 28px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .footer-right {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-link {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    .dot {
+      margin-inline: 6px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%) translateY(20px);
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      background: rgba(17, 17, 23, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--fg);
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+      z-index: 20;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
 </head>
 <body>
   <div class="page-flicker-overlay"></div>
