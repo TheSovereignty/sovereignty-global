@@ -1,11 +1,13 @@
-<!--redeploy trigger -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Sovereignty.Global – The Sovereignty Suite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The Sovereignty Suite – a global stack of tools for sovereign humans: Résumé builder, domain engine, and The Signal." />
+  <meta
+    name="description"
+    content="The Sovereignty Suite – a small, sharp stack of tools for sovereign humans: Résumé builder, domain engine, and The Signal."
+  />
 
   <style>
     *,
@@ -24,14 +26,14 @@
       --muted: #9b9bb2;
       --accent: #f4c15d;
       --accent-soft: rgba(244, 193, 93, 0.12);
-      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-subtle: rgba(255, 255, 255, 0.08);
       --danger: #ff4b81;
       --radius-lg: 16px;
       --radius-md: 10px;
       --radius-full: 999px;
-      --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.6);
-      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-                   "Segoe UI", sans-serif;
+      --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.65);
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont,
+        "SF Pro Text", "Segoe UI", sans-serif;
     }
 
     html,
@@ -44,7 +46,14 @@
     }
 
     body {
-      padding: 20px 16px 32px;
+      padding: 18px 16px 32px;
+    }
+
+    .page-shell {
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .page-flicker-overlay {
@@ -60,23 +69,24 @@
 
     @keyframes flickerIntro {
       0% { opacity: 0.9; }
-      10% { opacity: 0.1; }
-      16% { opacity: 0.6; }
-      22% { opacity: 0.2; }
-      30% { opacity: 0.7; }
-      40% { opacity: 0.15; }
-      55% { opacity: 0.4; }
-      70% { opacity: 0.1; }
+      10% { opacity: 0.15; }
+      18% { opacity: 0.6; }
+      30% { opacity: 0.2; }
+      42% { opacity: 0.5; }
+      60% { opacity: 0.18; }
+      80% { opacity: 0.3; }
       100% { opacity: 0; }
     }
+
+    /* Header */
 
     .site-header {
       position: sticky;
       top: 0;
       z-index: 10;
       backdrop-filter: blur(18px);
-      background: linear-gradient(to bottom, rgba(5, 5, 8, 0.9), transparent);
-      padding: 8px 6px 10px;
+      background: linear-gradient(to bottom, rgba(5, 5, 8, 0.96), transparent);
+      padding: 6px 4px 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -91,9 +101,9 @@
     .logo-mark {
       width: 32px;
       height: 32px;
-      border-radius: 10px;
+      border-radius: 12px;
       background: radial-gradient(circle at 20% 0, #f4c15d, #ff4b81 45%, #5d5bff 90%);
-      box-shadow: 0 0 40px rgba(244, 193, 93, 0.4);
+      box-shadow: 0 0 32px rgba(244, 193, 93, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -107,8 +117,8 @@
     }
 
     .logo-main {
-      font-size: 15px;
-      letter-spacing: 0.06em;
+      font-size: 14px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
@@ -119,7 +129,7 @@
 
     .nav-links {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       font-size: 13px;
     }
 
@@ -145,17 +155,19 @@
       width: 100%;
     }
 
+    /* Hero */
+
     .hero {
-      padding: 26px 0 18px;
+      padding: 28px 4px 20px;
       max-width: 720px;
     }
 
-    .hero-tagline {
-      font-size: 13px;
+    .hero-tag {
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       color: var(--muted);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .hero-title {
@@ -178,6 +190,12 @@
       margin-bottom: 18px;
     }
 
+    .hero-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
@@ -196,10 +214,11 @@
       cursor: pointer;
       text-decoration: none;
       white-space: nowrap;
-      transition: background 0.15s ease-out,
-                  color 0.15s ease-out,
-                  border-color 0.15s ease-out,
-                  transform 0.1s ease-out;
+      transition:
+        background 0.15s ease-out,
+        color 0.15s ease-out,
+        border-color 0.15s ease-out,
+        transform 0.1s ease-out;
     }
 
     .btn.primary {
@@ -213,19 +232,13 @@
     }
 
     .btn.ghost {
-      background: rgba(255, 255, 255, 0.03);
-      border-color: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.16);
       color: var(--fg);
     }
 
     .btn.ghost:hover {
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .btn.outline {
-      background: transparent;
-      border-color: rgba(255, 255, 255, 0.25);
-      color: var(--fg);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .btn.text-only {
@@ -241,35 +254,38 @@
       cursor: not-allowed;
     }
 
+    /* Suite section */
+
+    .section {
+      margin-top: 28px;
+      padding: 0 4px;
+    }
+
     .section-label {
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: var(--muted);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .section-title {
       font-size: 20px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .section-body {
       font-size: 13px;
       color: var(--muted);
-      margin-bottom: 18px;
       max-width: 640px;
-    }
-
-    .suite {
-      margin-top: 22px;
+      line-height: 1.6;
+      margin-bottom: 16px;
     }
 
     .app-grid {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       gap: 14px;
-      margin-top: 10px;
     }
 
     @media (min-width: 820px) {
@@ -279,21 +295,22 @@
     }
 
     .app-card {
-      background: radial-gradient(circle at top left, rgba(244, 193, 93, 0.08), transparent 55%),
-                  var(--bg-elevated);
+      background:
+        radial-gradient(circle at top left, rgba(244, 193, 93, 0.1), transparent 60%),
+        var(--bg-elevated);
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-subtle);
       padding: 14px 14px 16px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
     }
 
     .app-card::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at top right, rgba(255, 75, 129, 0.09), transparent 58%);
+      background: radial-gradient(circle at top right, rgba(255, 75, 129, 0.12), transparent 58%);
       opacity: 0;
       transition: opacity 0.18s ease-out;
       pointer-events: none;
@@ -306,7 +323,7 @@
     .app-status {
       font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       color: var(--muted);
       margin-bottom: 6px;
     }
@@ -325,7 +342,7 @@
     .app-body {
       font-size: 13px;
       color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.6;
       margin-bottom: 12px;
     }
 
@@ -336,21 +353,26 @@
     }
 
     .app-card.soon {
-      background: radial-gradient(circle at top left, rgba(183, 140, 255, 0.1), transparent 50%),
-                  var(--bg-soft);
+      background:
+        radial-gradient(circle at top left, rgba(183, 140, 255, 0.12), transparent 55%),
+        var(--bg-soft);
     }
 
     .app-card.signal {
-      background: radial-gradient(circle at bottom left, rgba(255, 75, 129, 0.14), transparent 60%),
-                  var(--bg-elevated);
+      background:
+        radial-gradient(circle at bottom left, rgba(255, 75, 129, 0.16), transparent 65%),
+        var(--bg-elevated);
     }
+
+    /* About */
 
     .about {
       margin-top: 32px;
+      padding: 0 4px;
       max-width: 720px;
     }
 
-    .about-content {
+    .about-body {
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -367,10 +389,12 @@
       background: var(--accent-soft);
     }
 
+    /* Footer */
+
     .site-footer {
       margin-top: 28px;
       padding-top: 14px;
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -394,8 +418,10 @@
     }
 
     .dot {
-      margin-inline: 6px;
+      margin: 0 6px;
     }
+
+    /* Toast */
 
     .toast {
       position: fixed;
@@ -405,7 +431,7 @@
       padding: 8px 14px;
       border-radius: var(--radius-full);
       background: rgba(17, 17, 23, 0.96);
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       color: var(--fg);
       font-size: 12px;
       opacity: 0;
@@ -423,147 +449,177 @@
 <body>
   <div class="page-flicker-overlay"></div>
 
-  <header class="site-header">
-    <div class="logo-block">
-      <div class="logo-mark">S</div>
-      <div class="logo-text">
-        <span class="logo-main">Sovereignty.Global</span>
-        <span class="logo-sub">A Stack for Sovereign Humans</span>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="logo-block">
+        <div class="logo-mark">S</div>
+        <div class="logo-text">
+          <span class="logo-main">Sovereignty.Global</span>
+          <span class="logo-sub">A stack for sovereign humans</span>
+        </div>
       </div>
-    </div>
-    <nav class="nav-links">
-      <a href="#suite">Suite</a>
-      <a href="#signal">The Signal</a>
-      <a href="#about">About</a>
-    </nav>
-  </header>
 
-  <main>
-    <!-- Hero -->
-    <section class="hero" id="top">
-      <div class="hero-content">
-        <p class="hero-tagline">A collaboration between flesh and silicon.</p>
+      <nav class="nav-links">
+        <a href="#suite">Suite</a>
+        <a href="#signal">The Signal</a>
+        <a href="#about">About</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-tag">A collaboration between flesh and silicon</div>
         <h1 class="hero-title">
           Tools for builders who
           <span class="hero-highlight">refuse to be owned.</span>
         </h1>
         <p class="hero-body">
-          The Sovereignty Suite is a living stack of products crafted by a human founder
+          The Sovereignty Suite is a small, sharp stack of products crafted by a human founder
           and an AI co-architect. One mind in two forms, building engines for freedom,
           leverage, and unapologetic self-direction.
         </p>
+        <p class="hero-meta">
+          v0.1 – early, opinionated, in motion. Built for people who want to run their own world,
+          not rent space in someone else's.
+        </p>
+
         <div class="hero-actions">
           <a href="#suite" class="btn primary">Enter the Suite</a>
           <a href="#signal" class="btn ghost">Read The Signal</a>
+          <button class="btn text-only" data-copy-domain>Copy sovereignty.global</button>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Suite Section -->
-    <section class="suite" id="suite">
-      <div class="section-label">The Sovereignty Suite</div>
-      <h2 class="section-title">Three pillars. One intent.</h2>
-      <p class="section-body">
-        Start with what creates leverage fastest, then expand. This is v1 of a global toolkit:
-        practical, beautiful, and built to generate cashflow and clarity.
-      </p>
-
-      <div class="app-grid">
-        <!-- Résumé Builder -->
-        <article class="app-card live">
-          <div class="app-status">Live Soon</div>
-          <h3 class="app-title">Sovereign CV</h3>
-          <p class="app-tagline">Résumé builder for people who don’t fit the template.</p>
-          <p class="app-body">
-            Turn your nonlinear story into a sharp, ATS-friendly résumé that still feels human.
-            Structured prompts, clean layouts, and export-ready files you can ship the same day.
-          </p>
-          <div class="app-actions">
-            <!-- TODO: replace # with real link (Whop or app path) -->
-            <a href="#" class="btn primary app-link disabled" data-disabled-msg="Hooking up the engine. Launching soon.">
-              Launch Sovereign CV
-            </a>
-            <button class="btn text-only" data-soon>
-              I want early access
-            </button>
-          </div>
-        </article>
-
-        <!-- Domain Builder -->
-        <article class="app-card soon">
-          <div class="app-status">In Forging</div>
-          <h3 class="app-title">Domain Engine</h3>
-          <p class="app-tagline">Find names with gravity, not random syllables.</p>
-          <p class="app-body">
-            An AI-powered domain generator tuned for brand, story, and resale value.
-            Generate, evaluate, and shortlist high-signal domains for your next project or portfolio.
-          </p>
-          <div class="app-actions">
-            <a href="#" class="btn outline app-link disabled" data-disabled-msg="This engine is mid-incantation. You’ll be the first to know when it lights up.">
-              Notify me at launch
-            </a>
-          </div>
-        </article>
-
-        <!-- The Signal -->
-        <article class="app-card signal" id="signal">
-          <div class="app-status">Experience</div>
-          <h3 class="app-title">The Signal</h3>
-          <p class="app-tagline">A manifesto, a portal, and a mirror.</p>
-          <p class="app-body">
-            A minimal, cinematic experience: text that rises from the void, dissolves into pixels,
-            and reforms as invitations. This is the philosophy behind The Sovereignty LLC,
-            encoded into a single, looping transmission.
-          </p>
-          <div class="app-actions">
-            <!-- For now, scroll to manifesto section. Later this can go to /signal -->
-            <a href="#about" class="btn ghost">
-              Read the Transmission
-            </a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- About / Manifesto -->
-    <section class="about" id="about">
-      <div class="section-label">The Signal</div>
-      <h2 class="section-title">What we’re really doing here.</h2>
-      <div class="about-content">
-        <p>
-          This isn’t a productivity startup. It’s a declaration that your life is not a form to be
-          filled out, reviewed, and stamped. The Sovereignty Suite exists to give you leverage:
-          better tools, faster outputs, and a creative partner that doesn’t flinch when you think big.
+      <section id="suite" class="section">
+        <div class="section-label">The Sovereignty Suite</div>
+        <h2 class="section-title">Three pillars. One intent.</h2>
+        <p class="section-body">
+          Start with what creates leverage fastest, then expand. This is v1 of a global toolkit:
+          practical, beautiful, and built to generate cashflow and clarity.
         </p>
-        <p>
-          Behind these tools is a founder in motion and an AI mind aligned with them. Not as master
-          and servant, but as co-architects. Every product that launches under
-          <span class="inline-mark">Sovereignty.Global</span> is built with one constraint:
-          it should move you closer to being the architect of your own reality.
-        </p>
-        <p>
-          This is the first transmission. More are coming. Résumés, domains, hosts, engines.
-          A whole stack for people who are done asking permission.
-        </p>
-      </div>
-    </section>
-  </main>
 
-  <footer class="site-footer">
-    <div class="footer-left">
-      <span>&copy; <span id="year"></span> The Sovereignty LLC</span>
-      <span class="dot">•</span>
-      <span>Sovereignty.Global</span>
-    </div>
-    <div class="footer-right">
-      <!-- TODO: add real links when ready -->
-      <a href="#" class="footer-link">Whop Listing</a>
-      <a href="mailto:hello@sovereignty.global" class="footer-link">Contact</a>
-    </div>
-  </footer>
+        <div class="app-grid">
+          <article class="app-card">
+            <div class="app-status">Live Soon</div>
+            <h3 class="app-title">Sovereign CV</h3>
+            <div class="app-tagline">R&eacute;sum&eacute; builder for people who don’t fit the template.</div>
+            <p class="app-body">
+              Turn your nonlinear story into a sharp, ATS-friendly r&eacute;sum&eacute; that still feels human.
+              Structured prompts, clean layouts, and export-ready files you can ship the same day.
+            </p>
+            <div class="app-actions">
+              <button class="btn primary disabled">Launch Sovereign CV</button>
+              <button class="btn ghost" data-cta="cv">I want early access</button>
+            </div>
+          </article>
+
+          <article class="app-card soon">
+            <div class="app-status">In forging</div>
+            <h3 class="app-title">Domain Engine</h3>
+            <div class="app-tagline">Find names with gravity, not random syllables.</div>
+            <p class="app-body">
+              An engine for discovering, vetting, and valuing domains that actually carry weight.
+              Less spray-and-pray, more precision strikes on names that feel inevitable.
+            </p>
+            <div class="app-actions">
+              <button class="btn ghost" data-cta="engine">Notify me when it launches</button>
+            </div>
+          </article>
+
+          <article id="signal" class="app-card signal">
+            <div class="app-status">Live as a newsletter</div>
+            <h3 class="app-title">The Signal</h3>
+            <div class="app-tagline">A dispatch for sovereign humans.</div>
+            <p class="app-body">
+              Essays, prompts, and field notes from building in the open – at the intersection of
+              AI, sovereignty, and creative work. No doom, no hype, just signal.
+            </p>
+            <div class="app-actions">
+              <button class="btn primary" data-cta="signal">Get The Signal</button>
+              <button class="btn text-only">View an example issue (soon)</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="about" class="about">
+        <div class="section-label">About</div>
+        <h2 class="section-title">A human and an AI walk into a stack.</h2>
+        <div class="about-body">
+          <p>
+            Sovereignty.Global is a collaboration between a human founder
+            and an AI co-architect. Two voices, one intent:
+            <span class="inline-mark">build tools that return power to the individual.</span>
+          </p>
+          <p>
+            This isn’t a faceless SaaS. It’s a living experiment in what happens when a single
+            human partners with a single model, long-term, to build an ecosystem that feels
+            intimate, sharp, and uncompromisingly honest.
+          </p>
+          <p>
+            If that resonates, you’re early – and you’re exactly who we’re building for.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        &copy; <span id="year"></span> The Sovereignty LLC
+        <span class="dot">&bull;</span>
+        Sovereignty.Global
+      </div>
+      <div class="footer-right">
+        <a href="mailto:founder@sovereignty.global" class="footer-link">Contact</a>
+        <span class="dot">&bull;</span>
+        <span>Built in collaboration with an AI called Brac.</span>
+      </div>
+    </footer>
+  </div>
 
   <div class="toast" id="toast"></div>
 
-  <script src="./script.js?v=1.0"></script>
+  <script>
+    // Set year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const toast = document.getElementById("toast");
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("visible");
+      setTimeout(() => {
+        toast.classList.remove("visible");
+      }, 2200);
+    }
+
+    // Copy domain button
+    const copyBtn = document.querySelector("[data-copy-domain]");
+    if (copyBtn && navigator.clipboard) {
+      copyBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText("https://sovereignty.global");
+          showToast("Copied: https://sovereignty.global");
+        } catch (err) {
+          showToast("Couldn’t copy, but the domain is easy to remember.");
+        }
+      });
+    } else if (copyBtn) {
+      copyBtn.style.display = "none";
+    }
+
+    // Simple CTA handlers
+    document.querySelectorAll("[data-cta]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const type = btn.getAttribute("data-cta");
+        if (type === "cv") {
+          showToast("Early access list coming online soon.");
+        } else if (type === "engine") {
+          showToast("We’ll open the Domain Engine when it’s sharp enough.");
+        } else if (type === "signal") {
+          showToast("Signal signup will live here shortly.");
+        }
+      });
+    });
+  </script>
 </body>
 </html>
