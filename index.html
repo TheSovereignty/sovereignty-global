@@ -57,26 +57,50 @@
 }
 
          .page-flicker-overlay {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.06), transparent);
-    mix-blend-mode: screen;
-    pointer-events: none;
-    opacity: 0;
-    animation: flickerIntro 2.2s ease-out forwards;
-    z-index: 0;
-}
+			position: fixed;
+			inset: 0;
+			background: radial-gradient(circle at center, rgba(255, 255, 255, 0.06), transparent);
+			/*mix-blend-mode: screen;*/
+			pointer-events: none;
+			opacity: 0;
+			animation: flickerIntro 2.2s ease-out forwards;
+			animation-iteration-count: infinite;
+			z-index: 5;
+		}
 
-    @keyframes flickerIntro {
-        0% { opacity: 0.9; }
-        10% { opacity: 0.15; }
-        18% { opacity: 0.6; }
-        30% { opacity: 0.2; }
-        42% { opacity: 0.5; }
-        60% { opacity: 0.18; }
-        80% { opacity: 0.3; }
-        100% { opacity: 0; }
-    }
+		@keyframes flickerIntro {
+			0% {
+				opacity: 1.8;
+			}
+
+			10% {
+				opacity: 0.3;
+			}
+
+			18% {
+				opacity: 1.2;
+			}
+
+			30% {
+				opacity: 0.4;
+			}
+
+			42% {
+				opacity: 1.0;
+			}
+
+			60% {
+				opacity: 0.9;
+			}
+
+			80% {
+				opacity: 0.6;
+			}
+
+			100% {
+				opacity: 0.0;
+			}
+		}
 
          /* Header */
 
